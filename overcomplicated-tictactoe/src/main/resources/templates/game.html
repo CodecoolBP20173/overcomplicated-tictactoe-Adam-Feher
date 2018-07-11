@@ -20,7 +20,7 @@
         </div>
         <div class="media-right">
             <span class="media-heading" th:text="${player.userName}"/>
-            <img class="media-object" th:src="${avatar_uri}" alt="avatar"/>
+            <img class="media-object" th:src="${avatar_uri}+${player.userName}" alt="avatar"/>
         </div>
     </header>
 
@@ -86,7 +86,7 @@
                 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#changeNameModal">
                     Change name
                 </button>
-                <!--<p class="lead funfact"  th:text="${fact}"></p>-->
+                <p class="lead funfact" th:text="${funfact}"></p>
             </div>
         </div>
     </div>

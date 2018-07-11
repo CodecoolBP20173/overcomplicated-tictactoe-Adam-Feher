@@ -32,7 +32,7 @@ public class GameController {
 
     @ModelAttribute("avatar_uri")
     public String getAvatarUri() {
-        return "https://robohash.org/codecool";
+        return "https://robohash.org/";
     }
 
     @GetMapping(value = "/")
@@ -46,9 +46,9 @@ public class GameController {
     }
 
     @GetMapping(value = "/game")
-    public String gameView(@ModelAttribute("player") Player player, Model model) {
-        model.addAttribute("funfact", "&quot;Chuck Norris knows the last digit of pi.&quot;");
-        model.addAttribute("comic_uri", "https://imgs.xkcd.com/comics/bad_code.png");
+    public String gameView(@ModelAttribute("player") Player player, Model model) throws Exception {
+        model.addAttribute("funfact", gameService.getFact());
+        model.addAttribute("comic_uri", gameService.getComic());
         return "game";
     }
 
@@ -56,16 +56,10 @@ public class GameController {
     public String gameMove(@ModelAttribute("player") Player player, @ModelAttribute("game") TictactoeGame game, @ModelAttribute("move") int move) throws Exception {
         if (game.getField(move) == Field.EMPTY) {
             game.setField(move, Field.CIRCLE);
-            System.out.println("Player moved " + move);
             if (game.isThereAFreeField()){
                 int aiMove = gameService.AiMove(game.getBoardAsCharArray());
                 game.setField(aiMove, Field.X);
-                System.out.println("Computer moved " + aiMove);
-            } else {
-                System.out.println("GameService over");
             }
-
         }
-
         return "redirect:/game";
 }}
