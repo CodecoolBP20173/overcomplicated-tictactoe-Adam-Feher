@@ -1,14 +1,24 @@
 package com.codecool.enterprise.overcomplicated.controller;
 
+import com.codecool.enterprise.overcomplicated.model.Field;
 import com.codecool.enterprise.overcomplicated.model.Player;
 import com.codecool.enterprise.overcomplicated.model.TictactoeGame;
+import com.codecool.enterprise.overcomplicated.service.GameService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 @Controller
 @SessionAttributes({"player", "game"})
 public class GameController {
+    private GameService gameService;
+
+    public GameController(GameService gameService) {
+        this.gameService = gameService;
+    }
+
 
     @ModelAttribute("player")
     public Player getPlayer() {
@@ -43,8 +53,19 @@ public class GameController {
     }
 
     @GetMapping(value = "/game-move")
-    public String gameMove(@ModelAttribute("player") Player player, @ModelAttribute("move") int move) {
-        System.out.println("Player moved " + move);
+    public String gameMove(@ModelAttribute("player") Player player, @ModelAttribute("game") TictactoeGame game, @ModelAttribute("move") int move) throws IOException {
+        if (game.getField(move) == Field.EMPTY) {
+            game.setField(move, Field.CIRCLE);
+            System.out.println("Player moved " + move);
+            if (game.isThereAFreeField()){
+                int aiMove = gameService.AiMove(game.getBoardAsCharArray());
+                game.setField(aiMove, Field.X);
+                System.out.println("Computer moved " + aiMove);
+            } else {
+                System.out.println("GameService over");
+            }
+
+        }
+
         return "redirect:/game";
-    }
-}
+}}
