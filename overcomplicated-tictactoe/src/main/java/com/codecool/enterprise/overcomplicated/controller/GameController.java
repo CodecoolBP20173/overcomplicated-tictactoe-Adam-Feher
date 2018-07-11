@@ -53,7 +53,7 @@ public class GameController {
     }
 
     @GetMapping(value = "/game-move")
-    public String gameMove(@ModelAttribute("player") Player player, @ModelAttribute("game") TictactoeGame game, @ModelAttribute("move") int move) throws IOException {
+    public String gameMove(@ModelAttribute("player") Player player, @ModelAttribute("game") TictactoeGame game, @ModelAttribute("move") int move) throws Exception {
         if (game.getField(move) == Field.EMPTY) {
             game.setField(move, Field.CIRCLE);
             System.out.println("Player moved " + move);

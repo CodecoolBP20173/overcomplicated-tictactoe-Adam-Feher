@@ -1,5 +1,6 @@
 package com.codecool.enterprise.overcomplicated.service;
 
+import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -11,16 +12,7 @@ public class HttpURLCon {
 
     private final String USER_AGENT = "Mozilla/5.0";
 
-  /*  public static void main(String[] args) throws Exception {
-
-        HttpURLCon http = new HttpURLCon();
-
-        System.out.println("Sending HTTP GET request");
-        http.sendGet();
-
-    }*/
-
-    private void sendGet(String url) throws Exception {
+    public JSONObject sendGet(String url) throws Exception {
 
 
         URL obj = new URL(url);
@@ -44,5 +36,6 @@ public class HttpURLCon {
         in.close();
 
         System.out.println(response.toString());
+        return new JSONObject(response.toString());
     }
 }
