@@ -6,7 +6,6 @@ public enum Field {
     EMPTY("");
 
     private final String value;
-
     private Field(String s) {
         value = s;
     }
